@@ -1,5 +1,6 @@
 import pygame
 from chess.constants import WIDTH, HEIGHT
+from chess.board import Board
 
 FPS = 60
 
@@ -9,6 +10,7 @@ pygame.display.set_caption('Khess')
 def main():
     run = True
     clock = pygame.time.Clock()
+    board = Board()
     
     while run:
         clock.tick(FPS)
@@ -20,8 +22,9 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pass
             
-        board.draw_cubes(WIN)
+        board.draw_squares(WIN)
         pygame.display.update()
+        
     pygame.quit()
     
 main()
