@@ -23,3 +23,4 @@ This project is to create a custom chess game, everything down from the board it
 - [ ] Capturing works
 - [ ] Castling works
 - [ ] Pinned pieces are reinforced
+- [ ] Change board to play from blacks perspective
