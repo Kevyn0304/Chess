@@ -28,6 +28,7 @@ This project is to create a custom chess game, everything down from the board it
 - [ ] Castling works
 - [ ] Pinned pieces are reinforced
 - [ ] Change board to play from blacks perspective
+- [ ] Add move history (stack)
 
 # Design Doc
 I honestly have no clue how to organize this, because I'm writing a design doc within what I thought was already the design doc. This section is meant to be kind of like what a college project website looks like, where theres sections for what needs to be done and any simply code for understanding only. Here goes nothing.
