@@ -35,3 +35,15 @@ I honestly have no clue how to organize this, because I'm writing a design doc w
 
 Throughout this project, I am following YouTuber Tech With Tim's Python/Pygame Checkers Tutorial. This design doc will be written as if his Checkers code is the skeleton code for my project, and I will add my Chess ideas as if they were assignments in a school project. My inspiration for such a structure comes from my programming projects in UC Berkeley. The formatting specifically is a culmination of projects I've done from the CS61 series and from CS 184.
 
+We first created a main.py file to begin writing our code. We also created a Chess subfolder to contain any files regarding the actual game. We create a \_\_init\_\_.py file at the root directory and within the Chess folder to initialize the folders as packages. After doing this, we go back to teh main.py file and import pygame as well as initialize our program window.
+
+Then we create a constants.py file in the Chess folder that will hold any constants that we will use throughout the project, like the values for our window's width and height. Here we also add ROWS and COLS, SQUARE_SIZE, and RGB color codes for white, black, and blue.
+
+We now go back to main.py and create our main function, creating a clock to keep our window running at a constant framerate, and creating an event loop.
+
+## board.py
+Then we create a new file within Chess called board.py, which will take care of the chessboard and how it looks and its represented internally. Here we make a method called draw_squares, which will simply draw the checkered black and white pattern of a traiditonal chessboard.
+
+## piece.py
+In order to fill the internal representation of our chessboard with the correct chess pieces, we need to create a Piece class. However, because of the many pieces in chess, each with different properties, we will make subclasses of Piece for each one. 
+
