@@ -27,19 +27,6 @@ class Piece(ABC):
         return str(self.color)
     
 class Rook(Piece):
-    """Simple Pawn class. Does not know about en-passant captures
-    because that would require some kind of last-move caching, which
-    will depend on where you want to go with this code. Uses `dir`
-    attribute to indicate direction of travel.
-
-    """
-    # I believe that the Pawn should automatically inherit all of the Piece values, here we just override anything else
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-
-
-    # draw on for each piece subclass
-    
     def draw(self, win):
         if self.color == BLACK:
             win.blit(BLACK_ROOK, (self.x - BLACK_ROOK.get_width()//2, self.y - BLACK_ROOK.get_height()//2))

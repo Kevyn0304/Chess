@@ -40,8 +40,9 @@ class Game:
         return False
     
     def _move(self, row, col):
-        piece = self.board.get_piece(row, col)
-        if self.selected and piece == 0 and (row, col) in self.valid_moves:
+        if self.selected and (row, col) in self.valid_moves:
+            if self.board.get_piece(row, col) != 0:
+                self.board.remove(row, col)
             self.board.move(self.selected, row, col)
             self.change_turn()
         else:
@@ -57,6 +58,6 @@ class Game:
     def change_turn(self):
         self.valid_moves = {}
         if self.turn == BLACK:
-            self.turn == WHITE
+            self.turn = WHITE
         else:
-            self.turn == BLACK
+            self.turn = BLACK

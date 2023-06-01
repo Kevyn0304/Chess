@@ -17,9 +17,9 @@ class Board:
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
         
-        #handle pawn promotion
-        if type(piece) is Pawn and row == 0 or row == ROWS:
-            piece = Queen(piece)
+        # #handle pawn promotion
+        # if type(piece) is Pawn and row == 0 or row == ROWS:
+        #     piece = Queen(piece.row, piece.col, piece.color)
         
     def get_piece(self, row, col):
         return self.board[row][col]
@@ -50,10 +50,12 @@ class Board:
                         
                 elif row == 1:
                     #fill with pawns
-                    self.board[row].append(Pawn(row, col, BLACK))
+                    #self.board[row].append(Pawn(row, col, BLACK))
+                    pass
                 elif row == 6:
                     #fill with white pawns
-                    self.board[row].append(Pawn(row, col, WHITE))
+                    #self.board[row].append(Pawn(row, col, WHITE))
+                    pass
                 elif row == 7:
                     #fill with white pieces in whites order
                     if col == 0:
@@ -84,9 +86,8 @@ class Board:
                 if piece != 0:
                     piece.draw(win)
               
-    def remove(self, pieces):
-        for piece in pieces:
-            self.board[piece.row][piece.col] = 0
+    def remove(self, row, col):
+        self.board[row][col] = 0
                          
     # moves is a dictionary where the key is the location for the piece to be moved to and the value is an array of pieces to be removed.
     # remove before moving
@@ -98,19 +99,19 @@ class Board:
             
         if type(piece) == Rook:
             #rook logic
-            pass
+            moves = self.get_valid_moves_rook(piece)
         elif type(piece) == Knight:
             #knight logic
-            pass
+            moves = self.get_valid_moves_knight(piece)
         elif type(piece) == Bishop:
             #bishop logic
-            pass
+            moves = self.get_valid_moves_bishop(piece)
         elif type(piece) == Queen:
             #queen logic
-            pass
+            moves = self.get_valid_moves_queen(piece)
         elif type(piece) == King:
             #king logic
-            pass
+            moves = self.get_valid_moves_king(piece)
         elif type(piece) == Pawn:
             #pawn logic
             moves = self.get_valid_moves_pawn(piece, direction)
@@ -131,15 +132,51 @@ class Board:
             moves.update({(row + (2 * direction), col): []})
             
         # check front right diagonal if enemy piece and record take location
-        if self.is_valid_move(row + direction, col + 1) and type(self.get_piece(row + direction, col + 1)) == Pawn and self.get_piece(row + direction, col + 1).color != piece.color:
+        # used not zero because for some reason doesn't work if I check Piece instead
+        if self.within_border(row + direction, col + 1) and self.get_piece(row + direction, col + 1) != 0 and self.get_piece(row + direction, col + 1).color != piece.color:
             moves.update({(row + direction, col + 1): [(row + direction, col + 1)]})
             
-        if self.is_valid_move(row + direction, col - 1) and type(self.get_piece(row + direction, col - 1)) == Pawn and self.get_piece(row + direction, col - 1).color != piece.color:
+        if self.within_border(row + direction, col - 1) and self.get_piece(row + direction, col - 1) != 0 and self.get_piece(row + direction, col - 1).color != piece.color:
             moves.update({(row + direction, col - 1): [(row + direction, col - 1)]})
         
         return moves
     
-    def is_valid_move(self, row, col):
+    
+    def get_valid_moves_rook(self, piece):
+        moves = {}
+        row = piece.row
+        col = piece.col
+        
+        # check pieces going up, down, left, and right
+        #   check if current piece is empty (0), current color, or opponents color and within borders of board
+        #       if empty, add to moves and continue checking
+        #       elif opponent, add piece to valid moves and stop
+        #       elif current color, stop without including current coordinates
+        temp_row = row
+        temp_col = col
+        
+    def get_valid_moves_knight(self, piece):
+        moves = {}
+        row = piece.row
+        col = piece.col
+        
+    def get_valid_moves_bishop(self, piece):
+        moves = {}
+        row = piece.row
+        col = piece.col
+        
+    def get_valid_moves_queen(self, piece):
+        moves = {}
+        row = piece.row
+        col = piece.col
+        
+    def get_valid_moves_king(self, piece):
+        moves = {}
+        row = piece.row
+        col = piece.col
+        
+        
+    def within_border(self, row, col):
         # Check if the move is within the board boundaries
         if row >= 0 and col >= 0 and row < ROWS and col < COLS:
                 return True
