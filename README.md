@@ -47,3 +47,5 @@ Then we create a new file within Chess called board.py, which will take care of 
 ## piece.py
 In order to fill the internal representation of our chessboard with the correct chess pieces, we need to create a Piece class. However, because of the many pieces in chess, each with different properties, we will make subclasses of Piece for each one. 
 
+Havent updated in a long time, skipped a lot of stuff. but the following is now pawn movement implementation
+### Pawn Movement
