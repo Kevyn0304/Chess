@@ -23,18 +23,20 @@ This project is to create a custom chess game, everything down from the board it
 - [x] Draw pieces in correct spots
 - [x] Pawn movement
 - [x] Pawn taking
-- [ ] Pawn promotion
 - [ ] Rook movement
 - [ ] Rook taking
 - [ ] King movement
 - [ ] King taking
-- [ ] King and Rook castling mechanic
 - [ ] Knight movement
 - [ ] Knight taking
 - [ ] Bishop movement
 - [ ] Bishop taking
+- [ ] Queen movement
+- [ ] Queen taking
 - [x] Show valid places to move
 - [ ] Pinned pieces are reinforced
+- [ ] Pawn promotion
+- [ ] King and Rook castling mechanic
 - [ ] Change board to play from blacks perspective
 - [ ] Add move history (stack)
 
