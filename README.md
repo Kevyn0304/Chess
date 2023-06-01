@@ -22,7 +22,7 @@ This project is to create a custom chess game, everything down from the board it
 - [x] Draw the basic empty chess board
 - [x] Draw pieces in correct spots
 - [x] Pawn movement
-- [ ] Pawn taking
+- [x] Pawn taking
 - [ ] Pawn promotion
 - [ ] Rook movement
 - [ ] Rook taking
