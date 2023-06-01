@@ -1,5 +1,5 @@
 import pygame
-from .constants import BLACK, WHITE, COLS, ROWS, SQUARE_SIZE
+from .constants import BLACK, WHITE, COLS, ROWS, SQUARE_SIZE, BLUE
 from .piece import *
 
 class Board:
@@ -24,7 +24,6 @@ class Board:
     def get_piece(self, row, col):
         return self.board[row][col]
         
-    
     def create_board(self):
         for row in range(ROWS):
             self.board.append([])
@@ -84,3 +83,65 @@ class Board:
                 piece = self.board[row][col]
                 if piece != 0:
                     piece.draw(win)
+              
+    def remove(self, pieces):
+        for piece in pieces:
+            self.board[piece.row][piece.col] = 0
+                         
+    # moves is a dictionary where the key is the location for the piece to be moved to and the value is an array of pieces to be removed.
+    # remove before moving
+    def get_valid_moves(self, piece):
+        if piece.color == WHITE:
+            direction = -1 #up the board
+        else:
+            direction = 1 #down the board
+            
+        if type(piece) == Rook:
+            #rook logic
+            pass
+        elif type(piece) == Knight:
+            #knight logic
+            pass
+        elif type(piece) == Bishop:
+            #bishop logic
+            pass
+        elif type(piece) == Queen:
+            #queen logic
+            pass
+        elif type(piece) == King:
+            #king logic
+            pass
+        elif type(piece) == Pawn:
+            #pawn logic
+            moves = self.get_valid_moves_pawn(piece, direction)
+            
+        return moves
+        
+    # gotta return dictionary moves
+    def get_valid_moves_pawn(self, piece, direction):
+        moves = {}
+        row = piece.row
+        col = piece.col
+        # check in front of pawn if empty square, if so add to possible moves
+        if self.get_piece(row + direction, col) == 0:
+            moves.update({(row + direction, col): []})
+        
+        # check first time moving for moving 2 pieces ahead
+        if piece.moved == False and self.get_piece(row + direction, col) == 0 and self.get_piece(row + (direction * 2), col) == 0:
+            moves.update({(row + (2 * direction), col): []})
+            
+        # check front right diagonal if enemy piece and record take location
+        if self.is_valid_move(row + direction, col + 1) and type(self.get_piece(row + direction, col + 1)) == Pawn and self.get_piece(row + direction, col + 1).color != piece.color:
+            moves.update({(row + direction, col + 1): [(row + direction, col + 1)]})
+            
+        if self.is_valid_move(row + direction, col - 1) and type(self.get_piece(row + direction, col - 1)) == Pawn and self.get_piece(row + direction, col - 1).color != piece.color:
+            moves.update({(row + direction, col - 1): [(row + direction, col - 1)]})
+        
+        return moves
+    
+    def is_valid_move(self, row, col):
+        # Check if the move is within the board boundaries
+        if row >= 0 and col >= 0 and row < ROWS and col < COLS:
+                return True
+        return False
+        

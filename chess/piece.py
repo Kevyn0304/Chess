@@ -8,12 +8,6 @@ class Piece(ABC):
         self.col = col
         self.color = color
         self.moved = False
-        
-        if self.color == BLACK:
-            self.direction = -1
-        else:
-            self.direction = 1
-            
         self.x = 0
         self.y = 0
         self.calc_pos()
@@ -51,31 +45,6 @@ class Rook(Piece):
             win.blit(BLACK_ROOK, (self.x - BLACK_ROOK.get_width()//2, self.y - BLACK_ROOK.get_height()//2))
         else:
             win.blit(WHITE_ROOK, (self.x - WHITE_ROOK.get_width()//2, self.y - WHITE_ROOK.get_height()//2))
-        
-    def valid_moves(self):
-        """Yield all valid moves from this location."""
-
-        piece_at = self.board.piece_at
-        color = self.color
-        file = self.file
-
-        dir = self.dir
-        r1 = self.rank + dir
-
-        # Captures
-        for f1 in (file-1, file+1):
-            if piece_at(r1, f1).color != color:
-                yield (r1, f1)
-
-        # Non-captures
-        if not piece_at(r1, file):
-            yield (r1, file)
-
-            # SPECIAL: Double move if done first 
-            r2 = r1 + dir
-
-            if self.never_moved and not piece_at(r2, file):
-                yield (r2, file)
                 
 class Knight(Piece):
     def draw(self, win):
