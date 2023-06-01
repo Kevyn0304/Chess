@@ -20,12 +20,20 @@ This project is to create a custom chess game, everything down from the board it
 
 # Checklist <a name="checklist"></a>
 - [x] Draw the basic empty chess board
-- [ ] Draw pieces in correct spots
-- [ ] Make sure each piece has it's own logic
-- [ ] Ensure proper movement
-- [ ] Show valid places to move
-- [ ] Capturing works
-- [ ] Castling works
+- [x] Draw pieces in correct spots
+- [x] Pawn movement
+- [ ] Pawn taking
+- [ ] Pawn promotion
+- [ ] Rook movement
+- [ ] Rook taking
+- [ ] King movement
+- [ ] King taking
+- [ ] King and Rook castling mechanic
+- [ ] Knight movement
+- [ ] Knight taking
+- [ ] Bishop movement
+- [ ] Bishop taking
+- [x] Show valid places to move
 - [ ] Pinned pieces are reinforced
 - [ ] Change board to play from blacks perspective
 - [ ] Add move history (stack)
