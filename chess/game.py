@@ -40,7 +40,7 @@ class Game:
         return False
     
     def _move(self, row, col):
-        if self.selected and (row, col) in self.valid_moves:
+        if self.valid_moves and self.selected and (row, col) in self.valid_moves:
             if self.board.get_piece(row, col) != 0:
                 self.board.remove(row, col)
             self.board.move(self.selected, row, col)
@@ -51,9 +51,10 @@ class Game:
         return True
     
     def draw_valid_moves(self, moves):
-        for move in moves:
-            row, col = move
-            pygame.draw.circle(self.win, BLUE, (col * SQUARE_SIZE + SQUARE_SIZE // 2, row * SQUARE_SIZE + SQUARE_SIZE // 2), 15) 
+        if moves:
+            for move in moves:
+                row, col = move
+                pygame.draw.circle(self.win, BLUE, (col * SQUARE_SIZE + SQUARE_SIZE // 2, row * SQUARE_SIZE + SQUARE_SIZE // 2), 15) 
     
     def change_turn(self):
         self.valid_moves = {}

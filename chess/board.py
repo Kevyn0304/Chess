@@ -17,10 +17,12 @@ class Board:
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
         
-        # #handle pawn promotion
-        # if type(piece) is Pawn and row == 0 or row == ROWS:
-        #     piece = Queen(piece.row, piece.col, piece.color)
+        #handle pawn promotion
+        if type(piece) is Pawn and row == 0 or row == ROWS:
+            temp = Queen(piece.row, piece.col, piece.color)
+            self.piece = temp
         
+    # returns either 0 or a Piece object
     def get_piece(self, row, col):
         return self.board[row][col]
         
@@ -51,11 +53,13 @@ class Board:
                 elif row == 1:
                     #fill with pawns
                     #self.board[row].append(Pawn(row, col, BLACK))
-                    pass
+                    self.board[row].append(0)
+                    
                 elif row == 6:
                     #fill with white pawns
                     #self.board[row].append(Pawn(row, col, WHITE))
-                    pass
+                    self.board[row].append(0)
+                    
                 elif row == 7:
                     #fill with white pieces in whites order
                     if col == 0:
@@ -100,18 +104,24 @@ class Board:
         if type(piece) == Rook:
             #rook logic
             moves = self.get_valid_moves_rook(piece)
+            
         elif type(piece) == Knight:
             #knight logic
             moves = self.get_valid_moves_knight(piece)
+            
         elif type(piece) == Bishop:
             #bishop logic
             moves = self.get_valid_moves_bishop(piece)
+            
         elif type(piece) == Queen:
             #queen logic
-            moves = self.get_valid_moves_queen(piece)
+            moves = self.get_valid_moves_rook(piece)
+            moves.update(self.get_valid_moves_bishop(piece))
+            
         elif type(piece) == King:
             #king logic
             moves = self.get_valid_moves_king(piece)
+            
         elif type(piece) == Pawn:
             #pawn logic
             moves = self.get_valid_moves_pawn(piece, direction)
@@ -123,6 +133,7 @@ class Board:
         moves = {}
         row = piece.row
         col = piece.col
+        
         # check in front of pawn if empty square, if so add to possible moves
         if self.get_piece(row + direction, col) == 0:
             moves.update({(row + direction, col): []})
@@ -152,9 +163,77 @@ class Board:
         #       if empty, add to moves and continue checking
         #       elif opponent, add piece to valid moves and stop
         #       elif current color, stop without including current coordinates
-        temp_row = row
-        temp_col = col
         
+        # check direction up
+        for up in range(row - 1, -1, -1):
+            print("up:")
+            if self.within_border(row, up):
+                current = self.get_piece(up, col)
+                if current == 0:
+                    print(" empty")
+                    moves.update({(up, col) : []})
+                elif current.color != piece.color:
+                    print(" enemy")
+                    moves.update({(up, col): [(up, col)]})
+                    break
+                else: # current.color = piece.color
+                    print(" ally")
+                    break
+            
+            
+        # check direction down
+        for down in range(row + 1, ROWS):
+            print("down:")
+            if self.within_border(row, down):
+                current = self.get_piece(down, col)
+                if current == 0:
+                    print(" empty")
+                    moves.update({(down, col) : []})
+                elif current.color != piece.color:
+                    print(" enemy")
+                    moves.update({(down, col): [(down, col)]})
+                    break
+                else: # current.color = piece.color
+                    print(" ally")
+                    break
+                
+        
+        
+        # check direction right
+        for right in range(col + 1, COLS):
+            print("right:")
+            if self.within_border(right, col):
+                current = self.get_piece(row, right)
+                if current == 0:
+                    print(" empty")
+                    moves.update({(row, right) : []})
+                elif current.color != piece.color:
+                    print(" enemy")
+                    moves.update({(row, right): [(row, right)]})
+                    break
+                else: # current.color = piece.color
+                    print(" ally")
+                    break
+                
+        # check direction left
+        for left in range(col - 1, -1, -1):
+            print("left")
+            if self.within_border(row, col):
+                current = self.get_piece(row, left)
+                if current == 0:
+                    print(" empty")
+                    moves.update({(row, left) : []})
+                elif current.color != piece.color:
+                    print(" enemy")
+                    moves.update({(row, left): [(row, left)]})
+                    break
+                else: # current.color = piece.color
+                    print(" ally")
+                    break
+                
+        return moves
+            
+    
     def get_valid_moves_knight(self, piece):
         moves = {}
         row = piece.row
@@ -165,6 +244,8 @@ class Board:
         row = piece.row
         col = piece.col
         
+        return moves
+    
     def get_valid_moves_queen(self, piece):
         moves = {}
         row = piece.row
