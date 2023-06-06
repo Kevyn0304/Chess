@@ -115,8 +115,7 @@ class Board:
             
         elif type(piece) == Queen:
             #queen logic
-            moves = self.get_valid_moves_rook(piece)
-            moves.update(self.get_valid_moves_bishop(piece))
+            moves = self.get_valid_moves_queen(piece)
             
         elif type(piece) == King:
             #king logic
@@ -158,77 +157,55 @@ class Board:
         row = piece.row
         col = piece.col
         
-        # check pieces going up, down, left, and right
-        #   check if current piece is empty (0), current color, or opponents color and within borders of board
-        #       if empty, add to moves and continue checking
-        #       elif opponent, add piece to valid moves and stop
-        #       elif current color, stop without including current coordinates
-        
         # check direction up
         for up in range(row - 1, -1, -1):
-            print("up:")
             if self.within_border(row, up):
                 current = self.get_piece(up, col)
                 if current == 0:
-                    print(" empty")
                     moves.update({(up, col) : []})
                 elif current.color != piece.color:
-                    print(" enemy")
                     moves.update({(up, col): [(up, col)]})
                     break
                 else: # current.color = piece.color
-                    print(" ally")
                     break
             
             
         # check direction down
         for down in range(row + 1, ROWS):
-            print("down:")
             if self.within_border(row, down):
                 current = self.get_piece(down, col)
                 if current == 0:
-                    print(" empty")
                     moves.update({(down, col) : []})
                 elif current.color != piece.color:
-                    print(" enemy")
                     moves.update({(down, col): [(down, col)]})
                     break
                 else: # current.color = piece.color
-                    print(" ally")
                     break
                 
         
         
         # check direction right
         for right in range(col + 1, COLS):
-            print("right:")
             if self.within_border(right, col):
                 current = self.get_piece(row, right)
                 if current == 0:
-                    print(" empty")
                     moves.update({(row, right) : []})
                 elif current.color != piece.color:
-                    print(" enemy")
                     moves.update({(row, right): [(row, right)]})
                     break
                 else: # current.color = piece.color
-                    print(" ally")
                     break
                 
         # check direction left
         for left in range(col - 1, -1, -1):
-            print("left")
             if self.within_border(row, col):
                 current = self.get_piece(row, left)
                 if current == 0:
-                    print(" empty")
                     moves.update({(row, left) : []})
                 elif current.color != piece.color:
-                    print(" enemy")
                     moves.update({(row, left): [(row, left)]})
                     break
                 else: # current.color = piece.color
-                    print(" ally")
                     break
                 
         return moves
@@ -239,17 +216,32 @@ class Board:
         row = piece.row
         col = piece.col
         
+        
     def get_valid_moves_bishop(self, piece):
         moves = {}
         row = piece.row
         col = piece.col
         
+        for up in range(row - 1, -1, -1):
+            for right in range(col + 1, COLS):
+                if self.within_border(row, up):
+                    current = self.get_piece(up, right)
+                    if current == 0:
+                        moves.update({(up, right) : []})
+                    elif current.color != piece.color:
+                        moves.update({(up, right): [(up, right)]})
+                        break
+                    else: # current.color = piece.color
+                        break
+                    
         return moves
     
     def get_valid_moves_queen(self, piece):
         moves = {}
-        row = piece.row
-        col = piece.col
+        moves.update(self.get_valid_moves_rook(piece))
+        moves.update(self.get_valid_moves_bishop(piece))
+        
+        return moves
         
     def get_valid_moves_king(self, piece):
         moves = {}
