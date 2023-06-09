@@ -222,18 +222,58 @@ class Board:
         row = piece.row
         col = piece.col
         
+        temp_col = col + 1
         for up in range(row - 1, -1, -1):
-            for right in range(col + 1, COLS):
-                if self.within_border(row, up):
-                    current = self.get_piece(up, right)
-                    if current == 0:
-                        moves.update({(up, right) : []})
-                    elif current.color != piece.color:
-                        moves.update({(up, right): [(up, right)]})
-                        break
-                    else: # current.color = piece.color
-                        break
+            if self.within_border(up, temp_col):
+                current = self.get_piece(up, temp_col)
+                if current == 0:
+                    moves.update({(up, temp_col) : []})
+                    temp_col += 1
+                elif current.color != piece.color:
+                    moves.update({(up, temp_col): [(up, temp_col)]})
+                    break
+                else: # current.color = piece.color
+                    break
+
+        temp_col = col - 1
+        for up in range(row - 1, -1, -1):
+            if self.within_border(up, temp_col):
+                current = self.get_piece(up, temp_col)
+                if current == 0:
+                    moves.update({(up, temp_col) : []})
+                    temp_col -= 1
+                elif current.color != piece.color:
+                    moves.update({(up, temp_col): [(up, temp_col)]})
+                    break
+                else: # current.color = piece.color
+                    break
                     
+        temp_col = col + 1
+        for down in range(row + 1, ROWS):
+            if self.within_border(down, temp_col):
+                current = self.get_piece(down, temp_col)
+                if current == 0:
+                    moves.update({(down, temp_col) : []})
+                    temp_col += 1
+                elif current.color != piece.color:
+                    moves.update({(down, temp_col): [(down, temp_col)]})
+                    break
+                else: # current.color = piece.color
+                    break
+
+        temp_col = col - 1
+        for down in range(row + 1, ROWS):
+            if self.within_border(down, temp_col):
+                current = self.get_piece(down, temp_col)
+                if current == 0:
+                    moves.update({(down, temp_col) : []})
+                    temp_col -= 1
+                elif current.color != piece.color:
+                    moves.update({(down, temp_col): [(down, temp_col)]})
+                    break
+                else: # current.color = piece.color
+                    break
+
         return moves
     
     def get_valid_moves_queen(self, piece):
