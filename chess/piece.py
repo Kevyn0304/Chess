@@ -11,6 +11,7 @@ class Piece(ABC):
         self.x = 0
         self.y = 0
         self.calc_pos()
+        self.can_move = True
     
     def calc_pos(self):
         self.x = SQUARE_SIZE * self.col + SQUARE_SIZE // 2

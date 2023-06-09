@@ -305,6 +305,22 @@ class Board:
         moves = {}
         row = piece.row
         col = piece.col
+
+        options = [(row - 1, col - 1), (row - 1, col), (row - 1, col + 1),
+                   (row, col - 1), (row, col + 1),
+                   (row + 1, col - 1), (row + 1, col), (row + 1, col + 1)]
+        
+        for spot in options:
+            row, col = spot
+            if self.within_border(row, col):
+
+                if self.get_piece(row, col) == 0:
+                    moves.update({(row, col): []})
+
+                if self.get_piece(row, col) != 0 and self.get_piece(row, col).color != piece.color:
+                    moves.update({(row, col): [(row, col)]})
+
+        return moves
         
         
     def within_border(self, row, col):
