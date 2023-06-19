@@ -52,13 +52,13 @@ class Board:
                         
                 elif row == 1:
                     #fill with pawns
-                    #self.board[row].append(Pawn(row, col, BLACK))
-                    self.board[row].append(0)
+                    self.board[row].append(Pawn(row, col, BLACK))
+                    #self.board[row].append(0)
                     
                 elif row == 6:
                     #fill with white pawns
-                    #self.board[row].append(Pawn(row, col, WHITE))
-                    self.board[row].append(0)
+                    self.board[row].append(Pawn(row, col, WHITE))
+                    #self.board[row].append(0)
                     
                 elif row == 7:
                     #fill with white pieces in whites order
